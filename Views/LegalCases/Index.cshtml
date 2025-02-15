@@ -1,0 +1,43 @@
+﻿   @model IEnumerable<LegalCaseManagement.Models.LegalCase>
+
+@{
+    ViewData["Title"] = "Legal Cases Index";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<!-- Search Form -->
+<form method="get" action="@Url.Action("Index", "LegalCases")">
+    <input type="text" name="searchTerm" placeholder="Search by title or description" value="@ViewData["SearchTerm"]" />
+    <button type="submit">Search</button>
+</form>
+
+<!-- Table to show cases -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>Case Title</th>
+            <th>Case Date</th>
+            <th>Status</th>
+             <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var legalCase in Model)
+        {
+            <tr>
+                <td>@legalCase.CaseTitle</td>
+                <td>@legalCase.CaseDate.ToShortDateString()</td>
+                <td>@legalCase.Status</td>
+                <td>
+                    <a href="@Url.Action("Edit", "LegalCases", new { id = legalCase.Id })">Edit</a> |
+                    <a href="@Url.Action("Delete", "LegalCases", new { id = legalCase.Id })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    <a href="@Url.Action("Create", "LegalCases")">Create New Case</a>
+</p>
